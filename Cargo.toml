@@ -1,0 +1,4 @@
+[package]
+name = "cat"
+version = "0.1.0"
+authors = ["Francisco Giordano <frangio.1@gmail.com>"]
