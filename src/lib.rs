@@ -6,13 +6,7 @@
 use std::io::{Read, Result};
 
 pub fn concat<I>(iter: I) -> Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
-where R: Read, I: Iterator<Item=R> {
-    let curr = iter.next();
-
-    Cat {
-        iter: iter,
-        curr: curr,
-    }
+    Concat::<I>::from(iter)
 }
 
 pub struct Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
@@ -27,6 +21,17 @@ impl<I> Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
     /// returned will point to the item which caused the the error.
     pub fn current(&self) -> Option<&<I as Iterator>::Item> {
         self.curr.as_ref()
+    }
+}
+
+impl<I> From<I> for Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
+    fn from(mut iter: I) -> Concat<I> {
+        let curr = iter.next();
+
+        Concat {
+            iter: iter,
+            curr: curr,
+        }
     }
 }
 
