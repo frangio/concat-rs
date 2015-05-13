@@ -5,7 +5,7 @@
 
 use std::io::{Read, Result};
 
-pub fn cat<R, I>(mut iter: I) -> Cat<R, I>
+pub fn concat<I>(iter: I) -> Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
 where R: Read, I: Iterator<Item=R> {
     let curr = iter.next();
 
@@ -15,25 +15,22 @@ where R: Read, I: Iterator<Item=R> {
     }
 }
 
-pub struct Cat<R, I>
-where R: Read, I: Iterator<Item=R> {
+pub struct Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
     iter: I,
-    curr: Option<R>,
+    curr: Option<<I as Iterator>::Item>,
 }
 
-impl<R, I> Cat<R, I>
-where R: Read, I: Iterator<Item=R> {
+impl<I> Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
     /// Returns a reference to the item last read, or None if the iterator has been exhausted.
     ///
     /// This is useful for error handling and reporting: if a read operation fails, the reference
     /// returned will point to the item which caused the the error.
-    pub fn current(&self) -> Option<&R> {
+    pub fn current(&self) -> Option<&<I as Iterator>::Item> {
         self.curr.as_ref()
     }
 }
 
-impl<R, I> Read for Cat<R, I>
-where R: Read, I: Iterator<Item=R> {
+impl<I> Read for Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
         let n = match self.curr {
             None => 0,
