@@ -1,7 +1,6 @@
-//! Provides the Concat reader-iterator adaptor, a reader each of whose instances is built from an
-//! iterator of readers and takes its contents from the iterator's items sequentially. Thus, the
-//! contents read from a Concat instance will be the concatenation of the items' contents, as if by
-//! repeatedly chaining them.
+//! Provides the Concat reader adaptor, which wraps around an iterator of readers and exposes its
+//! items' contents sequentially. Thus, the contents read from a Concat instance will be the
+//! concatenation of the items' contents.
 
 use std::io::{Read, Result};
 
