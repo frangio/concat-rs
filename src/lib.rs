@@ -50,3 +50,5 @@ impl<I> Read for Concat<I> where I: Iterator, <I as Iterator>::Item: Read {
         }
     }
 }
+
+mod tests;
