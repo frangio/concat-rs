@@ -1,4 +1,4 @@
-# concat-rs
+# concat.rs
 
 This library provides the Concat reader adaptor, which wraps around an
 iterator of readers and exposes its items' contents sequentially. Thus,
