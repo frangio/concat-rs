@@ -15,7 +15,11 @@ Assuming there's a variable `files: &mut [File]` in scope
 
 ```rust
 let mut c = concat(files.iter_mut());
-
 let mut buf = String::new();
 c.read_to_string(&mut buf).unwrap();
 ```
+
+## Example program
+
+In the `examples` directory lies a simple (partial) implementation of
+coreutils cat using the Concat adaptor.
