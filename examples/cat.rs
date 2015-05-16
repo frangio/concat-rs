@@ -1,4 +1,4 @@
-use std::io::{Read, Result, copy, stdout};
+use std::io::{Result, Read, Write, copy, stdout, stderr};
 use std::env::args_os;
 use std::process::exit;
 use std::ffi::OsString;
@@ -18,16 +18,18 @@ fn main() {
     if let Err(e) = res {
         match c.current() {
             None => {
-                println!("{}: {}\n",
+                writeln!(&mut stderr(),
+                         "{}: {}\n",
                          AsRef::<Path>::as_ref(&progname).display(),
-                         e);
+                         e).unwrap();
             },
 
             Some(ref f) => {
-                println!("{}: {}: {}\n",
+                writeln!(&mut stderr(),
+                         "{}: {}: {}\n",
                          AsRef::<Path>::as_ref(&progname).display(),
                          f.path().display(),
-                         e);
+                         e).unwrap();
             },
         };
 
